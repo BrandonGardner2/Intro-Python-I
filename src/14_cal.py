@@ -22,3 +22,39 @@ and does the following:
 import sys
 import calendar
 from datetime import datetime
+
+user = ()
+
+
+def prompt():
+    global user
+    user = input(
+        "Please provide a month, or a month and year separated by a comma.").split(',')
+    user = [int(i) for i in user if i != '']
+    render_data(user)
+
+
+def render_data(user_input):
+    today = datetime.now()
+    if not user_input:
+        # Print current month
+        print(calendar.month(today.year, today.month))
+        prompt()
+    elif len(user_input) == 1:
+        # Print month in current year
+        print(calendar.month(today.year, user_input[0]))
+        prompt()
+    elif len(user_input) == 2:
+        # Print month and year provided
+        print(calendar.month(user_input[1], user_input[0]))
+        prompt()
+    else:
+        error_handler()
+
+
+def error_handler():
+    print("You provided an invalid input. Please provide a month, or a month and year separated by a comma.")
+    prompt()
+
+
+prompt()
